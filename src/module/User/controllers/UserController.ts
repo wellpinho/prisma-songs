@@ -43,7 +43,7 @@ export class UserController {
     const user = await prismaClient.user.create({
       data: {
         name,
-        email
+        email,
       }
     })
 
