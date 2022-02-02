@@ -18,7 +18,7 @@ export class UserController {
     })
 
     if (userExists) {
-      return res.status(401).json({ Error: 'User already exists!'})
+      return res.status(401).json({ Error: 'User email already exists!'})
     }
 
     const user = await prismaClient.user.create({
@@ -27,6 +27,27 @@ export class UserController {
         email
       }
     })
+
+    return res.status(201).json(user)
+  }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params
+    const { name, email } = req.body
+
+    const user = await prismaClient.user.update({
+      where: {
+        id
+      },
+      data: {
+        name,
+        email
+      }
+    })
+
+    if (!user) {
+      return res.status(401).json({ Error: 'User not found!'})
+    }
 
     return res.status(201).json(user)
   }
