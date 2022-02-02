@@ -8,6 +8,25 @@ export class UserController {
     return res.status(200).json(users)
   }
 
+  async show(req: Request, res: Response) {
+    const { id } = req.params
+
+    const user = await prismaClient.user.findUnique({
+      where: {
+        id,
+      }
+    })
+
+    if (!user) {
+      return res.status(400).json({ Error: 'User not found!'})
+    }
+
+    return res.status(200).json({
+      Name: user.name,
+      Email: user.email
+    })
+  }
+
   async create(req: Request, res: Response) {
     const { name, email } = req.body
 
