@@ -51,4 +51,20 @@ export class UserController {
 
     return res.status(201).json(user)
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params
+
+    const user = await prismaClient.user.delete({
+      where: {
+        id
+      }
+    })
+
+    if (!user) {
+      return res.status(401).json({ Error: 'User not found!'})
+    }
+
+    return res.status(201).json({Message: 'User deleted!'})
+  }
 }
