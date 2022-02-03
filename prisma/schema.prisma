@@ -51,3 +51,10 @@ model Product {
 
   @@map("products")
 }
+
+model Category {
+  id        String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name      String
+
+  @@map("categories")
+}
